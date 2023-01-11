@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert, BeforeUpdate } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert, BeforeUpdate, OneToMany } from "typeorm"
 import { hashSync } from "bcryptjs"
 import { EnumUser } from "../interfaces/users"
+import { Address } from "./address.entity"
 
 
 @ Entity("users")
@@ -35,6 +36,9 @@ class User {
     hashPassword(){
         this.password = hashSync(this.password, 10)
     }
+
+    @OneToMany(() => Address, (address) => address.user)
+    address: Address[]
 
 }
 
