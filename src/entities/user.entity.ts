@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 import { hashSync } from "bcryptjs"
 import { EnumUser } from "../interfaces/users"
 import { Address } from "./address.entity"
+import { Order } from "./order.entity"
 
 
 @ Entity("users")
@@ -39,6 +40,9 @@ class User {
 
     @OneToMany(() => Address, (address) => address.user)
     address: Address[]
+
+    @OneToMany(() => Order, (order) => order.user)
+    order: Order[]
 
 }
 
