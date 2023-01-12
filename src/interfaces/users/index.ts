@@ -33,4 +33,10 @@ interface IUserResponse {
   address: IAdress;
 }
 
-export { IAdress, IUserRequest, IUserResponse };
+interface IUserDeleteRequest {
+  userId: string;
+  isAdmin: string;
+  userToBeDeleted: string;
+}
+
+export { IAdress, IUserRequest, IUserResponse, IUserDeleteRequest };
