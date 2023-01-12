@@ -3,6 +3,7 @@ import { createUserService } from "../services/usersServices/createUser.service"
 import { deleteUserService } from "../services/usersServices/deleteUser.service";
 import { getUserByIdService } from "../services/usersServices/getUserById.service";
 import { getUsersService } from "../services/usersServices/getUsers.service";
+import { updateUserService } from "../services/usersServices/updateUser.service";
 
 const createUserController = async (req: Request, res: Response) => {
   const newUser = await createUserService(req.body);
@@ -31,9 +32,15 @@ const getUserByIdController = async (req: Request, res: Response) => {
   return res.status(200).json(user);
 };
 
+const updateUserController = async (req: Request, res: Response) => {
+  const updatedUser = await updateUserService(req.params.id, req.body);
+  return res.status(200).json(updatedUser);
+};
+
 export {
   createUserController,
   getUsersController,
   deleteUserController,
   getUserByIdController,
+  updateUserController,
 };

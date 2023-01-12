@@ -39,4 +39,26 @@ interface IUserDeleteRequest {
   userToBeDeleted: string;
 }
 
-export { IAdress, IUserRequest, IUserResponse, IUserDeleteRequest };
+interface IUserUpdate {
+  name?: string;
+  cpf?: string;
+  email?: string;
+  telephone?: string;
+  password?: string;
+}
+
+interface IUserUpdateResponse {
+  name?: string;
+  cpf?: string;
+  email?: string;
+  telephone?: string;
+}
+
+export {
+  IAdress,
+  IUserRequest,
+  IUserResponse,
+  IUserDeleteRequest,
+  IUserUpdate,
+  IUserUpdateResponse,
+};
