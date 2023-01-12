@@ -1,11 +1,12 @@
-import "reflect-metadata"
-import express from "express"
-import "express-async-errors"
+import "reflect-metadata";
+import express from "express";
+import "express-async-errors";
+import typesRoutes from "./routes/types.routes";
 
+const app = express();
 
+app.use(express.json());
 
-const app = express()
-app.use(express.json())
+app.use("/types", typesRoutes);
 
-
-export default app
+export default app;
