@@ -158,6 +158,7 @@ GET - /types
 •A rota pode ser acessada apenas por administradores.
 
 PATCH - /types/<id>
+ 
 •A rota deve atualizar os dados dos types.
  
 •A rota pode ser acessada apenas por administradores.
