@@ -19,7 +19,7 @@ const createUserService = async (data: IUserRequest): Promise<User> => {
   }
 
   const newAdress = addressRepository.create(address);
-  const adr = await addressRepository.save(newAdress);
+  const adress = await addressRepository.save(newAdress);
 
   let userData = {
     name: name,
@@ -31,7 +31,7 @@ const createUserService = async (data: IUserRequest): Promise<User> => {
   };
   console.log(userData);
   const newUser = userDatabase.create(userData);
-  newUser.address.push(adr);
+  newUser.address.push(adress);
   await userDatabase.save(newUser);
 
   return newUser;

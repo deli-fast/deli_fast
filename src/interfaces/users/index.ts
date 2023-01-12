@@ -1,3 +1,5 @@
+import { array } from "yup";
+
 export enum EnumUser {
   ADMIN = "admin",
   DELIVERYMAN = "deliveryman",

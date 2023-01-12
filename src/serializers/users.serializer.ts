@@ -21,10 +21,21 @@ const createUserSerializer = yup.object().shape({
 const returnUserSerializer = yup.object().shape({
   name: yup.string(),
   cpf: yup.string(),
-  email: yup.string().email("Invalid email"),
+  email: yup.string(),
   telephone: yup.string(),
   type: yup.string(),
-  address: adrressSerializer,
+  address: yup.array(adrressSerializer),
+  id: yup.string(),
+  isActive: yup.boolean(),
+  createdAt: yup.date(),
+  updatedAt: yup.date(),
 });
 
-export { adrressSerializer, createUserSerializer, returnUserSerializer };
+const listUsersSerializer = yup.array(returnUserSerializer);
+
+export {
+  adrressSerializer,
+  createUserSerializer,
+  returnUserSerializer,
+  listUsersSerializer,
+};
