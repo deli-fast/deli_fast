@@ -1,8 +1,6 @@
 import { ObjectShape } from "yup/lib/object";
 import AppDataSource from "../../data-source";
-import { Address } from "../../entities/address.entity";
 import { User } from "../../entities/user.entity";
-import { IUserResponse } from "../../interfaces/users";
 import { listUsersSerializer } from "../../serializers/users.serializer";
 
 const getUsersService = async (): Promise<ObjectShape[]> => {
