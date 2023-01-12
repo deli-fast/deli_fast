@@ -27,6 +27,7 @@ GET - /users
 
 •A rota deve retornar todos os dados dos usuários, com exceção da hash de senha.
 
+
 •A rota pode ser acessada apenas por administradores.
 
 
