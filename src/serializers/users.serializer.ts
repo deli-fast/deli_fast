@@ -23,7 +23,7 @@ const returnUserSerializer = yup.object().shape({
   cpf: yup.string(),
   email: yup.string(),
   telephone: yup.string(),
-  type: yup.string(),
+  type: yup.mixed().oneOf(["admin", "deliveryman", "normal"]),
   address: yup.array(adrressSerializer),
   id: yup.string(),
   isActive: yup.boolean(),
