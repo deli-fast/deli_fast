@@ -4,7 +4,7 @@ import {
   deleteTypesController,
   listTypesController,
   updateTypesController,
-} from "../controller/types/types.controller";
+} from "../controller/types.controller";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensureIsAdmMiddleware from "../middlewares/ensureIsAdm.middleware";
 

@@ -1,8 +1,8 @@
 import { compare } from "bcryptjs";
-import AppDataSource from "../data-source";
-import { User } from "../entities/user.entity";
-import { AppError } from "../errors/errors";
-import { IUserLogin } from "../interfaces/login/index";
+import AppDataSource from "../../data-source";
+import { User } from "../../entities/user.entity";
+import { AppError } from "../../errors/errors";
+import { IUserLogin } from "../../interfaces/login/index";
 import jwt from "jsonwebtoken";
 
 const createSessionService = async ({

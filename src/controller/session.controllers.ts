@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { IUserLogin } from "../interfaces/login";
-import createSessionService from "../services/createSession.service";
+import createSessionService from "../services/session/createSession.service";
 
 const createSessionController = async (req: Request, res: Response) => {
   const sessionData: IUserLogin = req.body;
