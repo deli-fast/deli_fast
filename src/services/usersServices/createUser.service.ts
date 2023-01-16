@@ -25,6 +25,7 @@ const createUserService = async (data: IUserRequest): Promise<User> => {
     name: name,
     cpf: cpf,
     email: email,
+    types: type,
     password: password,
     telephone: telephone,
     address: [],
