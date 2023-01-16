@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import createProductService from "../services/createProduct.service";
-import deleteProductService from "../services/deleteProduct.service";
-import listProductsService from "../services/listProducts.service";
-import updateProductService from "../services/updateProduct.service";
+import createProductService from "../services/products/createProduct.service";
+import deleteProductService from "../services/products/deleteProduct.service";
+import listProductsService from "../services/products/listProducts.service";
+import updateProductService from "../services/products/updateProduct.service";
 
 const createProductController = async (req: Request, res: Response) => {
   const productData = req.body;

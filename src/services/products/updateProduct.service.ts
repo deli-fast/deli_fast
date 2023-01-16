@@ -1,5 +1,5 @@
-import AppDataSource from "../data-source";
-import { Product } from "../entities/product.entity";
+import AppDataSource from "../../data-source";
+import { Product } from "../../entities/product.entity";
 
 const updateProductService = async (id, { name, stock, typeId }) => {
   const product = await AppDataSource.createQueryBuilder()

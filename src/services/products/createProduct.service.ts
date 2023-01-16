@@ -1,6 +1,6 @@
-import AppDataSource from "../data-source";
-import { Product } from "../entities/product.entity";
-import { AppError } from "../errors/errors";
+import AppDataSource from "../../data-source";
+import { Product } from "../../entities/product.entity";
+import { AppError } from "../../errors/errors";
 
 const createProductService = async ({ id, name, stock, typeId }) => {
   const productExist = await AppDataSource.createQueryBuilder()
