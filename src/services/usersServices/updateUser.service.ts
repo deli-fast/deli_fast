@@ -15,8 +15,6 @@ const updateUserService = async (
     throw new AppError("Invalid id", 409);
   }
 
-  console.log(loggedUser.type);
-
   if (id !== loggedUser.id && loggedUser.type !== "admin") {
     throw new AppError("Not authorized!", 401);
   }
