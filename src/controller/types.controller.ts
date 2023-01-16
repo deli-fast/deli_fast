@@ -1,11 +1,10 @@
-import { Itypes } from "./../../interfaces/types/index";
-import { ItypesRequest } from "../../interfaces/types/index";
+import { Itypes } from "../interfaces/types/index";
+import { ItypesRequest } from "../interfaces/types/index";
 import { Request, Response } from "express";
-import createTypesService from "../../services/types/createTypes.service";
-import listTypesService from "../../services/types/listTypes.service";
-import updateTypesService from "../../services/types/updateTypes.service";
-import { json } from "stream/consumers";
-import deleteTypesService from "../../services/types/deleteTypes.service";
+import createTypesService from "../services/types/createTypes.service";
+import listTypesService from "../services/types/listTypes.service";
+import updateTypesService from "../services/types/updateTypes.service";
+import deleteTypesService from "../services/types/deleteTypes.service";
 
 const createTypesController = async (req: Request, res: Response) => {
   const typesData: ItypesRequest = req.body;
