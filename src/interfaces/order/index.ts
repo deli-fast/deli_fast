@@ -1,16 +1,24 @@
+export enum EnumOrder {
+    CONCLUIDO = "concluido",
+    EMANDAMENTO = "em andamento"
+}
+
+
 export interface IOrders {
     value: number;
     status: string;
     date: string;
-    user:string;
+   
 }
 
 export interface IOrdersResponse {
     value: number;
     status: string;
-    date: string;
-    user:string;
+    date: Date;
     id:number;
+    user:{
+        name:string;
+        id:string
+    }
 }
-  
   

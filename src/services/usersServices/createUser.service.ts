@@ -29,7 +29,7 @@ const createUserService = async (data: IUserRequest): Promise<User> => {
     telephone: telephone,
     address: [],
   };
-  console.log(userData);
+ 
   const newUser = userDatabase.create(userData);
   newUser.address.push(adress);
   await userDatabase.save(newUser);

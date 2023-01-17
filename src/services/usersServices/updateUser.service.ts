@@ -14,7 +14,7 @@ const updateUserService = async (
     throw new AppError("Invalid id", 409);
   }
 
-  console.log(payload);
+
 
   const userRepository = AppDataSource.getRepository(User);
   const user = await userRepository.findOneBy({ id });
