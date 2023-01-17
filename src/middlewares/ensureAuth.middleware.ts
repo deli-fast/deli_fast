@@ -21,6 +21,7 @@ const ensureAuthMiddleware = async (
       throw new AppError(error.message, 401);
     }
 
+    console.log(decoded);
     req.user = {
       id: decoded.sub,
       type: decoded.type,

@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, DeleteDateColumn } from "typeorm"
 import { EnumOrder } from "../interfaces/order"
 import { RlOrderProduct } from "./rl_order_product.entity"
 import { User } from "./user.entity"
@@ -17,6 +17,9 @@ class Order {
         default: EnumOrder.EMANDAMENTO
     })
     status: EnumOrder
+
+    @DeleteDateColumn()
+    deleteAt: Date
 
     @ManyToOne(() => User, (user) => user.order)
     user: User
