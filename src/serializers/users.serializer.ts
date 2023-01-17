@@ -1,8 +1,11 @@
 import * as yup from "yup";
 
-const adrressSerializer = yup.object().shape({
+const addrressSerializer = yup.object().shape({
   district: yup.string(),
-  zipCode: yup.string(),
+  zipCode: yup
+    .string()
+    .min(8, "zipcode must have 8 digits!")
+    .max(8, "zipcode must have 8 digits!"),
   number: yup.string(),
   city: yup.string(),
   state: yup.string(),
@@ -10,12 +13,18 @@ const adrressSerializer = yup.object().shape({
 
 const createUserSerializer = yup.object().shape({
   name: yup.string().required("Empty field!"),
-  cpf: yup.string().required("Empty field!"),
+  cpf: yup
+    .string()
+    .min(11, "cpf must have 11 digits!")
+    .max(11, "cpf must have 11 digits!")
+    .required("Empty field!"),
   email: yup.string().email("Invalid email").required("Empty field!"),
   password: yup.string().required("Empty field"),
   telephone: yup.string().required("Empty field"),
-  type: yup.string().required("Empty field"),
-  address: adrressSerializer,
+  type: yup
+    .string()
+    .oneOf(["admin", "deliveryman", "normal"], "Invalid type!")
+    .required("Empty field"),
 });
 
 const returnUserSerializer = yup.object().shape({
@@ -24,7 +33,7 @@ const returnUserSerializer = yup.object().shape({
   email: yup.string(),
   telephone: yup.string(),
   type: yup.mixed().oneOf(["admin", "deliveryman", "normal"]),
-  address: yup.array(adrressSerializer),
+  address: yup.array(addrressSerializer),
   id: yup.string(),
   isActive: yup.boolean(),
   createdAt: yup.date(),
@@ -34,7 +43,7 @@ const returnUserSerializer = yup.object().shape({
 const listUsersSerializer = yup.array(returnUserSerializer);
 
 export {
-  adrressSerializer,
+  addrressSerializer,
   createUserSerializer,
   returnUserSerializer,
   listUsersSerializer,

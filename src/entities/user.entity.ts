@@ -11,6 +11,7 @@ import {
 import { hashSync } from "bcryptjs";
 import { Address } from "./address.entity";
 import { Order } from "./order.entity";
+import { TEnumUser } from "../interfaces/users";
 
 export enum EnumUser {
   ADMIN = "admin",
@@ -32,12 +33,8 @@ class User {
   password: string;
   @Column()
   telephone: string;
-  @Column({
-    type: "enum",
-    enum: EnumUser,
-    default: EnumUser.NORMAL,
-  })
-  type: EnumUser;
+  @Column({ default: "NORMAL" })
+  type: string;
   @Column({ default: true })
   isActive: boolean;
   @CreateDateColumn()

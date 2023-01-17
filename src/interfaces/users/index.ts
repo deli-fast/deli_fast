@@ -1,13 +1,10 @@
-
 type TEnumUser = "ADMIN" | "DELIVERYMAN" | "NORMAL";
-=======
 
 export enum EnumUser {
   ADMIN = "admin",
   DELIVERYMAN = "deliveryman",
   NORMAL = "normal",
 }
-
 
 interface IAdress {
   district: string;
@@ -23,8 +20,8 @@ interface IUserRequest {
   email: string;
   password: string;
   telephone: string;
-  type: TEnumUser;
-  address: IAdress;
+  type: string;
+  address?: IAdress;
 }
 
 interface IUserResponse {
