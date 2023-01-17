@@ -19,6 +19,7 @@ const updateUserService = async (
     throw new AppError("Not authorized!", 401);
   }
 
+
   const userRepository = AppDataSource.getRepository(User);
   const user = await userRepository.findOneBy({ id });
 
