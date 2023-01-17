@@ -32,12 +32,8 @@ class User {
   password: string;
   @Column()
   telephone: string;
-  @Column({
-    type: "enum",
-    enum: EnumUser,
-    default: EnumUser.NORMAL,
-  })
-  type: EnumUser;
+  @Column({default : "NORMAL"})
+  type: string;
   @Column({ default: true })
   isActive: boolean;
   @CreateDateColumn()
