@@ -11,12 +11,8 @@ class Order {
     date: Date
     @Column( { type: "decimal", precision: 12, scale:2 })
     value: number
-    @Column({
-        type: "enum",
-        enum: EnumOrder,
-        default: EnumOrder.EMANDAMENTO
-    })
-    status: EnumOrder
+    @Column({default : "EM ANDAMENTO"})
+    status: string
 
     @ManyToOne(() => User, (user) => user.order)
     user: User
