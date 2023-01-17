@@ -15,7 +15,7 @@ interface IUserRequest {
   email: string;
   password: string;
   telephone: string;
-  type: TEnumUser;
+  type:  any;
   address: IAdress;
 }
 
@@ -24,7 +24,7 @@ interface IUserResponse {
   cpf: string;
   email: string;
   telephone: string;
-  type: TEnumUser;
+  type: any;
   address: IAdress;
 }
 
