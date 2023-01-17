@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Product } from "./product.entity"
 
 @Entity("types")
@@ -8,8 +8,8 @@ class Type {
     @Column()
     name: string
 
-    @OneToOne(() => Product, (product) => product.type)
-    product: Product
+    @OneToMany(() => Product, (product) => product.type)
+    products: Product[]
 }
 
 export { Type }

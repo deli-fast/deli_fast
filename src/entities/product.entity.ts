@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity,OneToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 import { RlOrderProduct } from "./rl_order_product.entity"
 import { Type } from "./type.entity"
 
@@ -11,8 +11,7 @@ class Product {
     @Column()
     stock: number
 
-    @OneToOne(() => Type, (type) => type)
-    @JoinColumn()
+    @ManyToOne(() => Type, (type) => type.products)
     type: Type
 
     @OneToMany(() => RlOrderProduct, (rlOrderProduct) => rlOrderProduct.product)
