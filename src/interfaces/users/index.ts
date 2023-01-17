@@ -1,6 +1,5 @@
 
 type TEnumUser = "ADMIN" | "DELIVERYMAN" | "NORMAL";
-=======
 
 export enum EnumUser {
   ADMIN = "admin",
