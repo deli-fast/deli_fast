@@ -1,7 +1,7 @@
 import AppDataSource from "../../data-source";
 import { Product } from "../../entities/product.entity";
 
-const deleteProductService = async (id:number) => {
+const deleteProductService = async (id: number) => {
   await AppDataSource.createQueryBuilder()
     .delete()
     .from(Product)
@@ -9,7 +9,7 @@ const deleteProductService = async (id:number) => {
     .returning("*")
     .execute();
 
-    return {};
+  return {};
 };
 
 export default deleteProductService;
