@@ -1,11 +1,15 @@
 import AppDataSource from "../../data-source";
 import { Product } from "../../entities/product.entity";
+import { IProduct, IProductRequest } from "../../interfaces/product";
 
-const updateProductService = async (id, { name, stock, typeId }) => {
+const updateProductService = async (
+  id: number,
+  { name, stock, type }: IProductRequest
+): Promise<IProduct> => {
   const product = await AppDataSource.createQueryBuilder()
     .from(Product, "products")
     .update()
-    .set({ name, stock })
+    .set({ name, stock, type })
     .where("id = :id_product", { id_product: id })
     .returning("*")
     .execute();
