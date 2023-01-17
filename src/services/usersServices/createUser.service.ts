@@ -20,28 +20,28 @@ const createUserService = async (data: IUserRequest): Promise<ObjectShape> => {
     throw new AppError("User already exists!", 409);
   }
 
-  const newAdress = addressRepository.create(address);
-  const adress = await addressRepository.save(newAdress);
+  const newAddress = addressRepository.create(address);
+  await addressRepository.save(newAddress);
 
   let userData = {
     name: name,
     cpf: cpf,
     email: email,
-    type: type,
     password: password,
+    type: type,
     telephone: telephone,
     address: [],
   };
 
   const newUser = userDatabase.create(userData);
-  newUser.address.push(adress);
+  newUser.address.push(newAddress);
   await userDatabase.save(newUser);
 
-  const userReturn = await returnUserSerializer.validate(newUser, {
+  const returnUser = await returnUserSerializer.validate(newUser, {
     stripUnknown: true,
   });
 
-  return userReturn;
+  return returnUser;
 };
 
 export { createUserService };
