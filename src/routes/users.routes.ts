@@ -19,7 +19,7 @@ userRouter.get(
   getUsersController
 );
 userRouter.delete("/:id", ensureAuthMiddleware, deleteUserController);
-userRouter.get("/:id", getUserByIdController);
+userRouter.get("/:id", ensureAuthMiddleware, getUserByIdController);
 userRouter.patch(
   "/:id",
   ensureAuthMiddleware,

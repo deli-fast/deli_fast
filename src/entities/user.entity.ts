@@ -9,9 +9,15 @@ import {
   OneToMany,
 } from "typeorm";
 import { hashSync } from "bcryptjs";
-import { EnumUser } from "../interfaces/users";
 import { Address } from "./address.entity";
 import { Order } from "./order.entity";
+import { TEnumUser } from "../interfaces/users";
+
+export enum EnumUser {
+  ADMIN = "admin",
+  DELIVERYMAN = "deliveryman",
+  NORMAL = "normal",
+}
 
 @Entity("users")
 class User {
@@ -27,12 +33,8 @@ class User {
   password: string;
   @Column()
   telephone: string;
-  @Column({
-    type: "enum",
-    enum: EnumUser,
-    default: EnumUser.NORMAL,
-  })
-  type: EnumUser;
+  @Column({ default: "NORMAL" })
+  type: string;
   @Column({ default: true })
   isActive: boolean;
   @CreateDateColumn()
