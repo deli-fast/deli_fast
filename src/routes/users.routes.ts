@@ -6,13 +6,20 @@ import {
   getUsersController,
   updateUserController,
 } from "../controller/users.controllers";
+import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
+import ensureIsAdmMiddleware from "../middlewares/ensureIsAdm.middleware";
 
 const userRouter = Router();
 
 userRouter.post("", createUserController);
-userRouter.get("", getUsersController);
-userRouter.delete("/:id", deleteUserController);
-userRouter.get("/:id", getUserByIdController);
-userRouter.patch("/:id", updateUserController);
+userRouter.get(
+  "",
+  ensureAuthMiddleware,
+  ensureIsAdmMiddleware,
+  getUsersController
+);
+userRouter.delete("/:id", ensureAuthMiddleware, deleteUserController);
+userRouter.get("/:id", ensureAuthMiddleware, getUserByIdController);
+userRouter.patch("/:id", ensureAuthMiddleware, ensureIsAdmMiddleware ,updateUserController);
 
 export default userRouter;

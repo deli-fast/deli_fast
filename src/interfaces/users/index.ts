@@ -1,10 +1,13 @@
-import { array } from "yup";
+
+type TEnumUser = "ADMIN" | "DELIVERYMAN" | "NORMAL";
+=======
 
 export enum EnumUser {
   ADMIN = "admin",
   DELIVERYMAN = "deliveryman",
   NORMAL = "normal",
 }
+
 
 interface IAdress {
   district: string;
@@ -20,7 +23,7 @@ interface IUserRequest {
   email: string;
   password: string;
   telephone: string;
-  type: EnumUser;
+  type: TEnumUser;
   address: IAdress;
 }
 
@@ -29,7 +32,7 @@ interface IUserResponse {
   cpf: string;
   email: string;
   telephone: string;
-  type: EnumUser;
+  type: TEnumUser;
   address: IAdress;
 }
 
@@ -61,4 +64,5 @@ export {
   IUserDeleteRequest,
   IUserUpdate,
   IUserUpdateResponse,
+  TEnumUser,
 };
