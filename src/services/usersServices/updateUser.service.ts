@@ -7,6 +7,7 @@ import { IUserUpdate } from "../../interfaces/users";
 import { returnUserSerializer } from "../../serializers/users.serializer";
 
 const updateUserService = async (
+  loggedUser: any,
   id: string,
   payload: IUserUpdate
 ): Promise<ObjectShape> => {
@@ -14,6 +15,9 @@ const updateUserService = async (
     throw new AppError("Invalid id", 409);
   }
 
+  if (id !== loggedUser.id && loggedUser.type !== "admin") {
+    throw new AppError("Not authorized!", 401);
+  }
 
 
   const userRepository = AppDataSource.getRepository(User);

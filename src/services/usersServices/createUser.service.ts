@@ -25,11 +25,12 @@ const createUserService = async (data: IUserRequest): Promise<User> => {
     name: name,
     cpf: cpf,
     email: email,
+    enum: type,
     password: password,
     telephone: telephone,
     address: [],
   };
- 
+
   const newUser = userDatabase.create(userData);
   newUser.address.push(adress);
   await userDatabase.save(newUser);
