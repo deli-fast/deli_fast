@@ -48,6 +48,14 @@ const returnUserSerializer = yup.object().shape({
   updatedAt: yup.date(),
 });
 
+const updateUserSerializer = yup.object().shape({
+  name: yup.string(),
+  cpf: yup.string(),
+  email: yup.string(),
+  telephone: yup.string(),
+  type: yup.string().oneOf(["admin", "deliveryman", "normal"]),
+});
+
 const listUsersSerializer = yup.array(returnUserSerializer);
 
 export {
@@ -56,4 +64,5 @@ export {
   returnUserSerializer,
   listUsersSerializer,
   returAddressSerializer,
+  updateUserSerializer,
 };
