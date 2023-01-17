@@ -17,8 +17,8 @@ const getUsersController = async (req: Request, res: Response) => {
 
 const deleteUserController = async (req: Request, res: Response) => {
   const payload = {
-    userId: req.body.id,
-    isAdmin: req.body.isAdmin,
+    userId: req.user.id,
+    isAdmin: req.user.type,
     userToBeDeleted: req.params.id,
   };
 
