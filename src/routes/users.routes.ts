@@ -20,6 +20,6 @@ userRouter.get(
 );
 userRouter.delete("/:id", ensureAuthMiddleware, deleteUserController);
 userRouter.get("/:id", ensureAuthMiddleware, getUserByIdController);
-userRouter.patch("/:id", ensureAuthMiddleware, updateUserController);
+userRouter.patch("/:id", ensureAuthMiddleware, ensureIsAdmMiddleware ,updateUserController);
 
 export default userRouter;
