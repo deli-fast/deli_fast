@@ -25,7 +25,7 @@ describe("/users", () => {
 
     });
 
-/*
+
     test("POST /users - You must be able to create a users",async () => {
         const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
         const resp = await request(app).post('/users').set("Authorization", `Bearer ${loginResponse.body.token}`).send(mockedIUser)
@@ -186,5 +186,4 @@ describe("/users", () => {
         expect(resp.status).toBe(403)
              
     })
-    */
 })

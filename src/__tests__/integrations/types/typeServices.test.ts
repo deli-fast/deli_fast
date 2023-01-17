@@ -53,7 +53,7 @@ describe("/types", () => {
         const loginResponse = await request(app).post("/login").send(mockedIUserAdmin);
         const resp = await request(app).get('/types').set("Authorization", `Bearer ${loginResponse.body.token}`)
 
-        expect(resp.body).toHaveLength(2)
+        expect(resp.body).toHaveLength(1)
      
     })
 
@@ -123,17 +123,6 @@ describe("/types", () => {
              
     })
 
-    test("DELETE /types/:id -  Must be able to delete types",async () => {
-        const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
-        const typeTobeDeleted = await request(app).get('/types').set("Authorization", `Bearer ${loginResponse.body.token}`)
-
-        const resp = await request(app).delete(`/types/${typeTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
-        const findType = await request(app).get(`/types/${typeTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
-        expect(findType.status).toBe(404)
-        expect(findType.body).toHaveProperty("message")
-     
-    })
-
     test("DELETE /types/:id -  Dont't permit to delete types without authentication",async () => {
         const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
 
@@ -162,6 +151,17 @@ describe("/types", () => {
         expect(resp.body).toHaveProperty("message")
         expect(resp.status).toBe(403)
              
+    })
+
+    test("DELETE /types/:id -  Must be able to delete types",async () => {
+        const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
+        const typeTobeDeleted = await request(app).get('/types').set("Authorization", `Bearer ${loginResponse.body.token}`)
+
+        const resp = await request(app).delete(`/types/${typeTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+        const findType = await request(app).get(`/types/${typeTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+        expect(findType.status).toBe(404)
+        expect(findType.body).toHaveProperty("message")
+     
     })
 })
 

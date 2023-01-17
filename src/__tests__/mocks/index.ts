@@ -20,7 +20,7 @@ export const mockedIUser : IUserRequest ={
 
 export const mockedIUserAdmin : IUserRequest ={
     name: 'admin',
-    cpf: '05856927858',
+    cpf: '05856998858',
     email: 'admin@mail.com',
     password: '1234',
     telephone: '41999025689',

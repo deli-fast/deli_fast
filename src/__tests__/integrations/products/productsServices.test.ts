@@ -25,11 +25,7 @@ describe("/products", () => {
         await connection.destroy()
     });
 
-    test("Should insert the information of the new user in the database", () => {
 
-    });
-
-/*
     test("POST /products - You must be able to create a product",async () => {
         const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
         const types = await request(app).get('/types').set("Authorization", `Bearer ${loginResponse.body.token}`)
@@ -196,5 +192,5 @@ describe("/products", () => {
         expect(resp.body).toHaveProperty("message")
         expect(resp.status).toBe(403)
              
-    });*/
+    });
 });
