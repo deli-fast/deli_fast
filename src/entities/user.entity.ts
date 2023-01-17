@@ -9,9 +9,14 @@ import {
   OneToMany,
 } from "typeorm";
 import { hashSync } from "bcryptjs";
-import { EnumUser } from "../interfaces/users";
 import { Address } from "./address.entity";
 import { Order } from "./order.entity";
+
+export enum EnumUser {
+  ADMIN = "admin",
+  DELIVERYMAN = "deliveryman",
+  NORMAL = "normal",
+}
 
 @Entity("users")
 class User {

@@ -13,7 +13,7 @@ const getUserByIdService = async (id: string): Promise<ObjectShape> => {
   const usersRepository = AppDataSource.getRepository(User);
 
   const user = await usersRepository.findOneBy({ id });
-  console.log(user.type);
+  
 
   if (!user || !user.isActive) {
     throw new AppError("User does not exists!", 404);
