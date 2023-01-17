@@ -25,7 +25,8 @@ describe("/types", () => {
 
 
     test("POST /types - You must be able to create a product type",async () => {
-        const resp = await request(app).post('/types').send(mockedITypesRequest)
+        const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
+        const resp = await request(app).post('/types').send(mockedITypesRequest).set("Authorization", `Bearer ${loginResponse.body.token}`)
 
         expect(resp.body).toHaveProperty("id")
         expect(resp.body).toHaveProperty("name")

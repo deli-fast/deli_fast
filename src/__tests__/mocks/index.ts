@@ -50,3 +50,8 @@ export const mockedITypesRequest : ItypesRequest = {
     name : 'lanche'
 }
 
+export const mockedIProductsRequest = {
+    name : "X-Burguer",
+    stock : 1, 
+    typeId : "",
+}
