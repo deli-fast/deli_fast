@@ -1,10 +1,15 @@
+import e from "express";
 import { ObjectShape } from "yup/lib/object";
 import AppDataSource from "../../data-source";
 import { Address } from "../../entities/address.entity";
 import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors/errors";
 import { IUserRequest } from "../../interfaces/users";
-import { returnUserSerializer } from "../../serializers/users.serializer";
+import {
+  addrressSerializer,
+  createUserSerializer,
+  returnUserSerializer,
+} from "../../serializers/users.serializer";
 
 const createUserService = async (data: IUserRequest): Promise<ObjectShape> => {
   const userDatabase = AppDataSource.getRepository(User);
@@ -20,9 +25,6 @@ const createUserService = async (data: IUserRequest): Promise<ObjectShape> => {
     throw new AppError("User already exists!", 409);
   }
 
-  const newAddress = addressRepository.create(address);
-  await addressRepository.save(newAddress);
-
   let userData = {
     name: name,
     cpf: cpf,
@@ -32,6 +34,27 @@ const createUserService = async (data: IUserRequest): Promise<ObjectShape> => {
     telephone: telephone,
     address: [],
   };
+
+  try {
+    await createUserSerializer.validate(userData, {
+      stripUnknown: true,
+      abortEarly: false,
+    });
+  } catch (error) {
+    throw new AppError(error.errors, 401);
+  }
+
+  try {
+    await addrressSerializer.validate(address, {
+      stripUnknown: true,
+      abortEarly: false,
+    });
+  } catch (error) {
+    throw new AppError(error.errors, 401);
+  }
+
+  const newAddress = addressRepository.create(address);
+  await addressRepository.save(newAddress);
 
   const newUser = userDatabase.create(userData);
   newUser.address.push(newAddress);

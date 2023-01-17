@@ -20,8 +20,8 @@ interface IUserRequest {
   email: string;
   password: string;
   telephone: string;
-  type: TEnumUser;
-  address: IAdress;
+  type: string;
+  address?: IAdress;
 }
 
 interface IUserResponse {
