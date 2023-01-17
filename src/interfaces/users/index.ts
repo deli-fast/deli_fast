@@ -20,7 +20,7 @@ interface IUserRequest {
   email: string;
   password: string;
   telephone: string;
-  type: EnumUser;
+  type: "admin" | "deliveryman" | "normal";
   address: IAdress;
 }
 
@@ -29,7 +29,7 @@ interface IUserResponse {
   cpf: string;
   email: string;
   telephone: string;
-  type: EnumUser;
+  type: "admin" | "deliveryman" | "normal";
   address: IAdress;
 }
 

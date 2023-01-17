@@ -27,6 +27,7 @@ const createUserService = async (data: IUserRequest): Promise<User> => {
     email: email,
     password: password,
     telephone: telephone,
+    type : type,
     address: [],
   };
   console.log(userData);
