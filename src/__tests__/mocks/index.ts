@@ -8,7 +8,7 @@ export const mockedIUser : IUserRequest ={
     email: 'josue@mail.com',
     password: '1234',
     telephone: '41999025689',
-    type : "NORMAL",
+    type : "normal",
     address: {
         district: 'Rua das Graças',
         zipCode: '19580022',
@@ -24,7 +24,7 @@ export const mockedIUserAdmin : IUserRequest ={
     email: 'admin@mail.com',
     password: '1234',
     telephone: '41999025689',
-    type : "ADMIN",
+    type : "admin",
     address: {
         district: 'Rua das Graças',
         zipCode: '19580022',
@@ -41,8 +41,8 @@ export const mockedIUserLogin : IUserLogin = {
 }
 
 export const mockedIUserAdminLogin : IUserLogin = {
-    email : 'admin@mail.com',
-    password : '1234'
+    email: 'admin@mail.com',
+    password: '1234'
 }
 
 

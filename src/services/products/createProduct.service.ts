@@ -1,8 +1,11 @@
 import AppDataSource from "../../data-source";
 import { Product } from "../../entities/product.entity";
 import { AppError } from "../../errors/errors";
+import { IProduct, IProductRequest } from "../../interfaces/product";
 
-const createProductService = async ({ id, name, stock, typeId }) => {
+const createProductService = async ({ name, stock, type }: IProductRequest): Promise<IProduct> => { 
+  const productRepo = await AppDataSource.getRepository(Product)
+
   const productExist = await AppDataSource.createQueryBuilder()
     .select("products")
     .from(Product, "products")
@@ -16,11 +19,13 @@ const createProductService = async ({ id, name, stock, typeId }) => {
   const newProduct = await AppDataSource.createQueryBuilder()
     .insert()
     .into(Product)
-    .values([{ name, stock }])
-    .returning("*")
+    .values([{ name, stock, type }])
     .execute();
 
-  return newProduct.raw[0];
+   const product = await productRepo.find({where : {id : newProduct.raw.id}, relations : { type :  true}})
+  return product[0]
+
+
 };
 
 export default createProductService;

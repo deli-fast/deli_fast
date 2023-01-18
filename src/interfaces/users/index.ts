@@ -1,4 +1,3 @@
-
 type TEnumUser = "ADMIN" | "DELIVERYMAN" | "NORMAL";
 
 interface IAdress {
@@ -15,8 +14,8 @@ interface IUserRequest {
   email: string;
   password: string;
   telephone: string;
-  type:  any;
-  address: IAdress;
+  type: string;
+  address?: IAdress;
 }
 
 interface IUserResponse {

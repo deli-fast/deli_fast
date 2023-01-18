@@ -6,7 +6,7 @@ const ensureIsAdmMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  if (req.user.type !== "ADMIN") {
+  if (req.user.type !== "admin") {
     throw new AppError("Missing admin permissions", 403);
   }
   return next();

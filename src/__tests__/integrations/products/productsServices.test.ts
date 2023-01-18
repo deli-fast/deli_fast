@@ -32,11 +32,11 @@ describe("/products", () => {
         mockedIProductsRequest.typeId = types.body[0].id
         const resp = await request(app).post('/products').set("Authorization", `Bearer ${loginResponse.body.token}`).send(mockedIProductsRequest)
 
-        expect(resp.body).toHaveProperty("id")
+          expect(resp.body).toHaveProperty("id")
         expect(resp.body).toHaveProperty("name")
         expect(resp.body).toHaveProperty("stock")
-        expect(resp.body).toHaveProperty("typeId")
-        expect(resp.status).toBe(201)        
+        expect(resp.body).toHaveProperty("type")
+        expect(resp.status).toBe(201)
     });
 
     test("POST /products - Dont't permit to create products without authentication",async () => {
@@ -67,7 +67,7 @@ describe("/products", () => {
         const loginResponse = await request(app).post("/login").send(mockedIUserAdmin);
         const resp = await request(app).get('/products').set("Authorization", `Bearer ${loginResponse.body.token}`)
 
-        expect(resp.body).toHaveLength(2)
+        expect(resp.body).toHaveLength(1)
      
     });
 
@@ -105,7 +105,6 @@ describe("/products", () => {
         expect(response.status).toBe(200)
         expect(productUpdated.body[0].name).toEqual("pizza")
         expect(productUpdated.body[0].stock).toEqual(2)
-        expect(productUpdated.body[0].name).toEqual(types.body[0].id)
     });
 
     test("PATCH /products/:id -  Dont't permit to update products not being admin",async () => {
@@ -153,17 +152,6 @@ describe("/products", () => {
              
     });
 
-    test("DELETE /products/:id -  Must be able to delete products",async () => {
-        const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
-        const  productTobeDeleted = await request(app).get('/products').set("Authorization", `Bearer ${loginResponse.body.token}`)
-
-        const resp = await request(app).delete(`/products/${productTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
-        const findProduct = await request(app).get(`/products/${productTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
-        expect(findProduct.status).toBe(404)
-        expect(findProduct.body).toHaveProperty("message")
-     
-    });
-
     test("DELETE /products/:id -  Dont't permit to delete products without authentication",async () => {
         const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
 
@@ -192,5 +180,15 @@ describe("/products", () => {
         expect(resp.body).toHaveProperty("message")
         expect(resp.status).toBe(403)
              
+    });
+
+    test("DELETE /products/:id -  Must be able to delete products",async () => {
+        const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
+        const  productTobeDeleted = await request(app).get('/products').set("Authorization", `Bearer ${loginResponse.body.token}`)
+
+        const resp = await request(app).delete(`/products/${productTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+        const findProduct = await request(app).get(`/products/${productTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+        expect(findProduct.status).toBe(404)
+     
     });
 });

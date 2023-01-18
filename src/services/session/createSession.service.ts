@@ -23,10 +23,10 @@ const createSessionService = async ({
     throw new AppError("User is inactive", 403);
   }
 
-  //   const passwordVerify = await compare(password, user.password);
-  //   if (!passwordVerify) {
-  //     throw new AppError("Email or password invalid", 403);
-  //   }
+  const passwordVerify = await compare(password, user.password);
+     if (!passwordVerify) {
+       throw new AppError("Email or password invalid", 403);
+     }
 
   const token = jwt.sign(
     {

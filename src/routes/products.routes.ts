@@ -5,12 +5,14 @@ import {
   listProductsController,
   updateProductController,
 } from "../controller/products.controller";
+import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
+import ensureIsAdmMiddleware from "../middlewares/ensureIsAdm.middleware";
 
 const productRouter = Router();
 
-productRouter.post("", createProductController);
-productRouter.get("", listProductsController);
-productRouter.patch("/:id", updateProductController);
-productRouter.delete("/:id", deleteProductController);
+productRouter.post("", ensureAuthMiddleware, ensureIsAdmMiddleware, createProductController);
+productRouter.get("", ensureAuthMiddleware, ensureIsAdmMiddleware, listProductsController);
+productRouter.patch("/:id", ensureAuthMiddleware, ensureIsAdmMiddleware, updateProductController);
+productRouter.delete("/:id", ensureAuthMiddleware, ensureIsAdmMiddleware, deleteProductController);
 
 export default productRouter;

@@ -5,8 +5,12 @@ import { IUserDeleteRequest } from "../../interfaces/users";
 
 const deleteUserService = async (payload: IUserDeleteRequest): Promise<{}> => {
   const usersRepository = AppDataSource.getRepository(User);
+  console.log(payload.isAdmin, payload.userId);
 
-  if (!payload.isAdmin && payload.userId !== payload.userToBeDeleted) {
+  if (
+    payload.isAdmin !== "admin" &&
+    payload.userId !== payload.userToBeDeleted
+  ) {
     throw new AppError("Unauthorized!", 401);
   }
 

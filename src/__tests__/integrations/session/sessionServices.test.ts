@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 import AppDataSource from "../../../data-source";
 import request from 'supertest';
 import app from '../../../app';
-import { mockedIUserAdmin, mockedIUserAdminLogin } from '../../mocks';
+import { mockedIUser, mockedIUserAdmin, mockedIUserAdminLogin } from '../../mocks';
 
 describe("/login", () => {
     let connection: DataSource
@@ -14,7 +14,8 @@ describe("/login", () => {
             console.error("Error Data Source not initialized", err)
         })
 
-        await request(app).post("/login").send(mockedIUserAdmin)
+        await request(app).post("/users").send(mockedIUserAdmin)
+        
     })
 
     
@@ -24,7 +25,7 @@ describe("/login", () => {
     })
 
     test("POST /login - should be able to login with the user",async () => {
-        const resp = await request(app).post("/login").send(mockedIUserAdminLogin);
+        const resp = await request(app).post("/login").send(mockedIUserAdmin);
         
         expect(resp.body).toHaveProperty("token")
         expect(resp.status).toBe(200)
@@ -43,13 +44,13 @@ describe("/login", () => {
     })
 
     test("POST /login -  Don't permit login the user with isActive = false",async () => {
-        const loginResp = await request(app).post("/login").send(mockedIUserAdminLogin);
+        const loginResp = await request(app).post("/login").send(mockedIUserAdmin);
         const user= await request(app).get('/users').set("Authorization", `Bearer ${loginResp.body.token}`)
         await request(app).delete(`/users/${user.body[0].id}`).set("Authorization", `Bearer ${loginResp.body.token}`)
 
-        const resp = await request(app).post("/login").send(mockedIUserAdminLogin);
-        expect(resp.body).toHaveProperty("message")
-        expect(resp.status).toBe(400)
-             
+       const resp = await request(app).post("/login").send(mockedIUserAdminLogin);
+
+       expect(resp.body).toHaveProperty("message")
+        expect(resp.status).toBe(403)
     })
 })

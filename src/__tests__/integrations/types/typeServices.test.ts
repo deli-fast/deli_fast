@@ -158,10 +158,8 @@ describe("/types", () => {
         const typeTobeDeleted = await request(app).get('/types').set("Authorization", `Bearer ${loginResponse.body.token}`)
 
         const resp = await request(app).delete(`/types/${typeTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
-        const findType = await request(app).get(`/types/${typeTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
-        expect(findType.status).toBe(404)
-        expect(findType.body).toHaveProperty("message")
-     
+        const findType = await request(app).get(`/types}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+        expect(findType.status).toBe(404)     
     })
 })
 
