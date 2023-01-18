@@ -2,7 +2,7 @@ import { IUserLogin } from "../../interfaces/login";
 import { ItypesRequest } from "../../interfaces/types";
 import { IUserRequest } from "../../interfaces/users";
 
-export const mockedIUser : IUserRequest ={
+const mockedIUser : IUserRequest ={
     name: 'josue',
     cpf: '05856927858',
     email: 'josue@mail.com',
@@ -18,7 +18,7 @@ export const mockedIUser : IUserRequest ={
     },
 }
 
-export const mockedIUserAdmin : IUserRequest ={
+const mockedIUserAdmin : IUserRequest ={
     name: 'admin',
     cpf: '05856998858',
     email: 'admin@mail.com',
@@ -35,23 +35,40 @@ export const mockedIUserAdmin : IUserRequest ={
 }
 
 
-export const mockedIUserLogin : IUserLogin = {
+const mockedIUserLogin : IUserLogin = {
     email : 'josue@mail.com',
     password : '1234'
 }
 
-export const mockedIUserAdminLogin : IUserLogin = {
+const mockedIUserAdminLogin : IUserLogin = {
     email: 'admin@mail.com',
     password: '1234'
 }
 
 
-export const mockedITypesRequest : ItypesRequest = {
+const mockedITypesRequest : ItypesRequest = {
     name : 'lanche'
 }
 
-export const mockedIProductsRequest = {
+const mockedIProductsRequest = {
     name : "X-Burguer",
     stock : 1, 
     typeId : "",
+}
+
+const mockedIOrdersRequest = {
+    date: "2022-12-22",
+    value: '200',
+    status: "em andamento",
+    user: ""
+}
+
+export {
+    mockedIUser,
+    mockedIUserAdmin,
+    mockedIUserLogin,
+    mockedIUserAdminLogin,
+    mockedITypesRequest,
+    mockedIOrdersRequest,
+    mockedIProductsRequest
 }

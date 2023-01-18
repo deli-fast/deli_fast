@@ -19,7 +19,6 @@ const createTypesService = async (data: ItypesRequest): Promise<Itypes> => {
   });
 
   await typesRepository.save(createTypes);
-  console.log(createTypes)
   return createTypes;
 };
 
