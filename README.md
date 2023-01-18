@@ -1,6 +1,8 @@
 	
 <h2>Deli Fast</h2>
 
+<a href="https://doc-deli-fast.vercel.app/" target="_blank">Documentação para usar as rotas da API</a>
+
 
 <h3>Instalação</h3>
 
