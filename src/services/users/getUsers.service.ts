@@ -5,7 +5,10 @@ import { listUsersSerializer } from "../../serializers/users.serializer";
 
 const getUsersService = async (): Promise<ObjectShape[]> => {
   const usersRepository = AppDataSource.getRepository(User);
-  const users = await usersRepository.find({ relations: { address: true } });
+  const users = await usersRepository.find({
+    where: { isActive: true },
+    relations: { address: true },
+  });
 
   const usersReturn = await listUsersSerializer.validate(users, {
     stripUnknown: true,

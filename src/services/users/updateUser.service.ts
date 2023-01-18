@@ -4,7 +4,10 @@ import AppDataSource from "../../data-source";
 import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors/errors";
 import { IUserUpdate } from "../../interfaces/users";
-import { returnUserSerializer } from "../../serializers/users.serializer";
+import {
+  returnUserSerializer,
+  updateUserSerializer,
+} from "../../serializers/users.serializer";
 
 const updateUserService = async (
   loggedUser: any,
@@ -19,13 +22,16 @@ const updateUserService = async (
     throw new AppError("Not authorized!", 401);
   }
 
-
   const userRepository = AppDataSource.getRepository(User);
   const user = await userRepository.findOneBy({ id });
 
   if (!user) {
     throw new AppError("User does not exists!", 404);
   }
+
+  payload = await updateUserSerializer.validate(payload, {
+    stripUnknown: true,
+  });
 
   const updateUser = await userRepository.update(id, {
     name: payload.name ? payload.name : user.name,
