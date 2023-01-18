@@ -21,43 +21,26 @@ describe("/users", () => {
 
     })
 
-    test("Should insert the information of the new user in the database", () => {
-
-    });
-
 
     test("POST /users - You must be able to create a users",async () => {
-        const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
-        const resp = await request(app).post('/users').set("Authorization", `Bearer ${loginResponse.body.token}`).send(mockedIUser)
+        const resp = await request(app).post('/users').send(mockedIUserAdmin)
 
         expect(resp.body).toHaveProperty("id")
         expect(resp.body).toHaveProperty("name")
-        expect(resp.body).toHaveProperty("stock")
-        expect(resp.body).toHaveProperty("typeId")
+        expect(resp.body).toHaveProperty("cpf")
+        expect(resp.body).toHaveProperty("email")
+        expect(resp.body).toHaveProperty("telephone")
+        expect(resp.body).toHaveProperty("name")
+        expect(resp.body).toHaveProperty("type")
+        expect(resp.body).toHaveProperty("address")
+        expect(resp.body).not.toHaveProperty("password")
         expect(resp.status).toBe(201)        
     })
 
-    test("POST /users - Dont't permit to create users without authentication",async () => {
-        const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
-        const resp = await request(app).post('/users').send(mockedIUser)
-
-        expect(resp.body).toHaveProperty("message")
-        expect(resp.status).toBe(401)  
-    })
-
-    test("POST /users - Dont't permit to create users not being admin",async () => {
-        const loginAdminResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
-
-        const loginResponse = await request(app).post("/login").send(mockedIUser);
-        const resp = await request(app).post('/users').set("Authorization", `Bearer ${loginResponse.body.token}`).send(mockedIUser)
-
-        expect(resp.body).toHaveProperty("message")
-        expect(resp.status).toBe(403)
-             
-    })
 
     test("GET /users - User admin must be able to list all users",async () => {
-        const loginResponse = await request(app).post("/login").send(mockedIUserAdmin);
+        await request(app).post('/users').send(mockedIUser)
+        const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
         const resp = await request(app).get('/users').set("Authorization", `Bearer ${loginResponse.body.token}`)
 
         expect(resp.body).toHaveLength(2)
@@ -81,44 +64,74 @@ describe("/users", () => {
              
     })
 
+    test("GET /users/:id - Dont't permit to list a especific users not being admin",async () => {
+        const adminLoginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
+        const loginResponse = await request(app).post("/login").send(mockedIUserLogin);
+        const users = await request(app).get('/users').set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
+
+        const resp = await request(app).get(`/users/${users.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+
+        expect(resp.body).toHaveProperty("message")
+        expect(resp.status).toBe(403)
+             
+    })
+
+    test("GET /users/:id - User admin must be able to list a especific users",async () => {
+        const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
+        const users = await request(app).get('/users').set("Authorization", `Bearer ${loginResponse.body.token}`)
+
+        const resp = await request(app).get(`/users/${users.body[1].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+
+        expect(resp.body).toHaveProperty("id")
+        expect(resp.body).toHaveProperty("name")
+        expect(resp.body).toHaveProperty("cpf")
+        expect(resp.body).toHaveProperty("email")
+        expect(resp.body).toHaveProperty("telephone")
+        expect(resp.body).toHaveProperty("name")
+        expect(resp.body).toHaveProperty("type")
+        expect(resp.status).toBe(200)     
+     
+    })
+
+    test("GET /users/:id - Dont't permit to list a especific users without authentication",async () => {
+        const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
+        const users = await request(app).get('/users').set("Authorization", `Bearer ${loginResponse.body.token}`)
+
+        const resp = await request(app).get(`/users/${users.body[0].id}`)
+        expect(resp.body).toHaveProperty("message")
+        expect(resp.status).toBe(401)
+             
+    })
+
+
+
     test("PATCH /users/:id - permit to update users",async () => {
         const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
         const token = `Bearer ${loginResponse.body.token}`
 
-        const types = await request(app).get('/types').set("Authorization", `Bearer ${loginResponse.body.token}`)
-
-        const newValues = {name: "pizza", stock : 2, typeId : types.body[0].id}
+        const newValues =   { name: 'pedro',  email: 'pedro@mail.com' }
 
         const userTobeUpdated = await request(app).get("/users").set("Authorization", token)
-        const userTobeUpdatedId = userTobeUpdated.body[0].id
+        const userTobeUpdatedId = userTobeUpdated.body[1].id
 
         const response = await request(app).patch(`/users/${userTobeUpdatedId}`).set("Authorization",token).send(newValues)
-        const userUpdated = await request(app).get("/users").set("Authorization", token)
 
         expect(response.status).toBe(200)
-        expect(userUpdated.body[0].name).toEqual("pizza")
-        expect(userUpdated.body[0].stock).toEqual(2)
-        expect(userUpdated.body[0].name).toEqual(types.body[0].id)
     })
 
-    test("PATCH /users/:id -  Dont't permit to update users not being admin",async () => {
-
-        const loginResponse = await request(app).post("/login").send(mockedIUserLogin);
+    test("PATCH /users/:id -  Dont't permit to update other users not being admin",async () => {
         const adminLoginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
+        const loginResponse = await request(app).post("/login").send({email: 'pedro@mail.com' , password : "1234"});
 
-        const token = `Bearer ${adminLoginResponse.body.token}`
+        const adminToken = `Bearer ${adminLoginResponse.body.token}`
+        const token = `Bearer ${loginResponse.body.token}`
 
-        const types = await request(app).get('/types').set("Authorization", token)
-
-        const newValues = {name: "pizza", stock : 2, typeId : types.body[0].id}
-
-
+        const newValues = { name: 'Joao',  email: 'Joao@mail.com' }
   
-        const userTobeUpdated = await request(app).get("/users").set("Authorization", token)
+        const userTobeUpdated = await request(app).get("/users").set("Authorization", adminToken)
         const userTobeUpdatedId = userTobeUpdated.body[0].id
 
-        const tokenUser = `Bearer ${loginResponse.body.token}`
-        const resp = await request(app).patch(`/users/${userTobeUpdatedId}`).set("Authorization",tokenUser).send(newValues)
+        const resp = await request(app).patch(`/users/${userTobeUpdatedId}`).set("Authorization",token).send(newValues)
 
         expect(resp.body).toHaveProperty("message")
         expect(resp.status).toBe(403)
@@ -127,17 +140,13 @@ describe("/users", () => {
 
     test("PATCH /users/:id -  Dont't permit to patch users without authentication",async () => {
 
-         const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
+        const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
         const token = `Bearer ${loginResponse.body.token}`
         
-        const types = await request(app).get('/types').set("Authorization", token)
-
-        const newValues = {name: "pizza", stock : 2, typeId : types.body[0].id}
-
+        const newValues = { name: 'Leticia',  email: 'leticia@mail.com' }
 
         const userTobeUpdated = await request(app).get("/users").set("Authorization", token)
         const userTobeUpdatedId = userTobeUpdated.body[0].id
-
 
         const resp = await request(app).patch(`/users/${userTobeUpdatedId}`).send(newValues)
 
@@ -146,16 +155,7 @@ describe("/users", () => {
              
     })
 
-    test("DELETE /users/:id -  Must be able to delete users",async () => {
-        const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
-        const  userTobeDeleted = await request(app).get('/users').set("Authorization", `Bearer ${loginResponse.body.token}`)
 
-        const resp = await request(app).delete(`/users/${userTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
-        const finduser = await request(app).get(`/users/${userTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
-        expect(finduser.status).toBe(404)
-        expect(finduser.body).toHaveProperty("message")
-     
-    })
 
     test("DELETE /users/:id -  Dont't permit to delete users without authentication",async () => {
         const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
@@ -183,7 +183,18 @@ describe("/users", () => {
         const resp = await request(app).delete(`/users/${userTobeDeletedId}`).set("Authorization",tokenUser)
 
         expect(resp.body).toHaveProperty("message")
-        expect(resp.status).toBe(403)
+        expect(resp.status).toBe(401)
              
+    })
+
+    test("DELETE /users/:id -  Must be able to delete users",async () => {
+        const loginResponse = await request(app).post("/login").send(mockedIUserAdminLogin);
+        const  userTobeDeleted = await request(app).get('/users').set("Authorization", `Bearer ${loginResponse.body.token}`)
+
+        const resp = await request(app).delete(`/users/${userTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+        const finduser = await request(app).get(`/users/${userTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+        expect(finduser.status).toBe(404)
+        expect(finduser.body).toHaveProperty("message")
+     
     })
 })
