@@ -12,13 +12,14 @@ import {
 const updateUserService = async (
   loggedUser: any,
   id: string,
+  loggedUserType : string,
   payload: IUserUpdate
 ): Promise<ObjectShape> => {
   if (!id) {
     throw new AppError("Invalid id", 409);
   }
 
-  if (id !== loggedUser.id && loggedUser.type !== "admin") {
+  if (id !== loggedUser.id && loggedUserType !== "admin") {
     throw new AppError("Not authorized!", 401);
   }
 

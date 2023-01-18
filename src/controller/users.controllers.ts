@@ -36,6 +36,7 @@ const updateUserController = async (req: Request, res: Response) => {
   const updatedUser = await updateUserService(
     req.user.id,
     req.params.id,
+    req.user.type,
     req.body
   );
   return res.status(200).json(updatedUser);
