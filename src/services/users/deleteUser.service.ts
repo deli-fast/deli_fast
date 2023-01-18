@@ -5,7 +5,6 @@ import { IUserDeleteRequest } from "../../interfaces/users";
 
 const deleteUserService = async (payload: IUserDeleteRequest): Promise<{}> => {
   const usersRepository = AppDataSource.getRepository(User);
-  console.log(payload.isAdmin, payload.userId);
 
   if (
     payload.isAdmin !== "admin" &&

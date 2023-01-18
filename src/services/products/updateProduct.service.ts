@@ -5,16 +5,19 @@ import { IProduct, IProductRequest } from "../../interfaces/product";
 const updateProductService = async (
   id: number,
   { name, stock, type }: IProductRequest
-): Promise<IProduct> => {
-  const product = await AppDataSource.createQueryBuilder()
+): Promise<IProduct[]> => {
+  const productRepo = await AppDataSource.getRepository(Product)
+
+  const productUpdated = await AppDataSource.createQueryBuilder()
     .from(Product, "products")
     .update()
     .set({ name, stock, type })
     .where("id = :id_product", { id_product: id })
-    .returning("*")
     .execute();
 
-  return product.raw[0];
+    const product = await productRepo.find({where : {id : productUpdated.raw.id}, relations : { type :  true}})
+
+    return product;
 };
 
 export default updateProductService;
