@@ -11,6 +11,14 @@ const addrressSerializer = yup.object().shape({
   state: yup.string(),
 });
 
+const returAddressSerializer = yup.object().shape({
+  district: yup.string(),
+  zipCode: yup.string(),
+  number: yup.string(),
+  city: yup.string(),
+  state: yup.string(),
+});
+
 const createUserSerializer = yup.object().shape({
   name: yup.string().required("Empty field!"),
   cpf: yup
@@ -32,8 +40,8 @@ const returnUserSerializer = yup.object().shape({
   cpf: yup.string(),
   email: yup.string(),
   telephone: yup.string(),
-  type: yup.mixed().oneOf(["admin", "deliveryman", "normal"]),
-  address: yup.array(addrressSerializer),
+  type: yup.string().oneOf(["admin", "deliveryman", "normal"]),
+  address: yup.array(returAddressSerializer),
   id: yup.string(),
   isActive: yup.boolean(),
   createdAt: yup.date(),
@@ -47,4 +55,5 @@ export {
   createUserSerializer,
   returnUserSerializer,
   listUsersSerializer,
+  returAddressSerializer,
 };
